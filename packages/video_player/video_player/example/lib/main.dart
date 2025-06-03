@@ -22,6 +22,10 @@ void main() {
 class _App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const bee =
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4';
+    const String calmar =
+        'https://api.help.intersoft.uz/media/films/calmar/master_4k.m3u8';
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -47,7 +51,11 @@ class _App extends StatelessWidget {
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.cloud),
-                text: 'Remote',
+                text: 'Remote 1',
+              ),
+              Tab(
+                icon: Icon(Icons.cloud),
+                text: 'Remote 2',
               ),
               Tab(icon: Icon(Icons.insert_drive_file), text: 'Asset'),
               Tab(icon: Icon(Icons.list), text: 'List example'),
@@ -56,7 +64,10 @@ class _App extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            _BumbleBeeRemoteVideo(),
+            const _BumbleBeeRemoteVideo(
+              link: bee,
+            ),
+            const _BumbleBeeRemoteVideo(link: calmar),
             _ButterFlyAssetVideo(),
             _ButterFlyAssetVideoInList(),
           ],
@@ -206,6 +217,10 @@ class _ButterFlyAssetVideoState extends State<_ButterFlyAssetVideo> {
 }
 
 class _BumbleBeeRemoteVideo extends StatefulWidget {
+  const _BumbleBeeRemoteVideo({required this.link});
+
+  final String link;
+
   @override
   _BumbleBeeRemoteVideoState createState() => _BumbleBeeRemoteVideoState();
 }
@@ -228,9 +243,9 @@ class _BumbleBeeRemoteVideoState extends State<_BumbleBeeRemoteVideo> {
   @override
   void initState() {
     super.initState();
+
     _controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+      Uri.parse(widget.link),
       closedCaptionFile: _loadCaptions(),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
